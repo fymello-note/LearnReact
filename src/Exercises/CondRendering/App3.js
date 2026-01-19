@@ -1,20 +1,16 @@
 function Drink({ name }) {
     let type, gram, year;
 
-    if(name === 'tea')
+    if(name === 'tea'){
         type = 'leaf';
-    else
-        type = 'bean';
-
-    if(name === 'tea')
         gram = '15-70 mg/cup';
-    else
-        gram = '80-185 mg/cup';
-
-    if(name === 'tea')
         year = '4,000+ years';
-    else
+    }else{
+        type = 'bean';
+        gram = '80-185 mg/cup';
         year = '1,000+ years';
+    }
+
 
   return (
     <section>

@@ -1,44 +1,43 @@
-/* function Item({name, isPacked}){
-	if(isPacked)
-		return <li className="item">{name} v</li>
+// Render of multiple items
 
-	return <li className="item">{name}</li>
-} */
+import { people } from "./data";
+import { getImage } from "./utils";
 
-/* function Item({name, isPacked}){
-	if(isPacked)
-		return null; // nothing to render
+/* const people = [
+  "Creola Katherine Johnson: mathematician",
+  "Mario José Molina-Pasquel Henríquez: chemist",
+  "Mohammad Abdus Salam: physicist",
+  "Percy Lavon Julian: chemist",
+  "Subrahmanyan Chandrasekhar: astrophysicist",
+]; */
 
-	return <li className="item">{name}</li>;
-} */
-
-// ternary operator
-
-/* function Item({name, isPacked}){
-	return 	(
-	<li className="item">
-		{name} {isPacked ? ("v") : (null)}
-	</li>
-	)
-} */
-
-// Logical AND operator
-function Item({name, isPacked}){
-	return 	(
-	<li className="item">
-		{name} {isPacked && "v"}
-	</li>
-	)
+export default function List(){
+	const listItem = people.map((person) => 
+		<li key={person.id}>{person.name}</li>
+	);
+	return <ul>{listItem}</ul>;
 }
 
-export default function PackingList(){
+/* export default function List(){
+	const chemist = people.filter(person => person.profession === 'chemist')
+
+	const listItems = chemist.map(person => 
+	<li key={person.id}>
+		<img
+			src={getImage(person.imageId)}
+			alt={person.name}
+		/>
+
+		<p><b>{person.name}</b>
+		{person.profession}
+		</p>
+
+	</li>
+	)
+
 	return (
-		<section>
-			<ul>
-				<Item isPacked={true} name="Space Suit"/>
-				<Item isPacked={true} name="Helmet"/>
-				<Item isPacked={false} name="Helmet"/>
-			</ul>
-		</section>
+		<ul>
+			{listItems}
+		</ul>
 	)
-}
+} */
