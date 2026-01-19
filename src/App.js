@@ -1,23 +1,44 @@
-import { getImage } from "./utils"
+/* function Item({name, isPacked}){
+	if(isPacked)
+		return <li className="item">{name} v</li>
 
-// introducing properties: way to send parameters to component
-function Avatar({person, size}){
-	return (
-		<img 
-			className="avatar"
-			src={getImage(person)}
-			alt="fulvios"
-			width={size}
-			height={size}
-		/>
+	return <li className="item">{name}</li>
+} */
+
+/* function Item({name, isPacked}){
+	if(isPacked)
+		return null; // nothing to render
+
+	return <li className="item">{name}</li>;
+} */
+
+// ternary operator
+
+/* function Item({name, isPacked}){
+	return 	(
+	<li className="item">
+		{name} {isPacked ? ("v") : (null)}
+	</li>
+	)
+} */
+
+// Logical AND operator
+function Item({name, isPacked}){
+	return 	(
+	<li className="item">
+		{name} {isPacked && "v"}
+	</li>
 	)
 }
 
-export default function Profile(){
+export default function PackingList(){
 	return (
-		<Avatar 
-			person={{imageId: "MK3eW3Am"}}
-			size={100}
-		/>
+		<section>
+			<ul>
+				<Item isPacked={true} name="Space Suit"/>
+				<Item isPacked={true} name="Helmet"/>
+				<Item isPacked={false} name="Helmet"/>
+			</ul>
+		</section>
 	)
 }
