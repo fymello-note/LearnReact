@@ -1,43 +1,87 @@
-// Render of multiple items
+// event handling
 
-import { people } from "./data";
-import { getImage } from "./utils";
+/* export default function Button(){
 
-/* const people = [
-  "Creola Katherine Johnson: mathematician",
-  "Mario José Molina-Pasquel Henríquez: chemist",
-  "Mohammad Abdus Salam: physicist",
-  "Percy Lavon Julian: chemist",
-  "Subrahmanyan Chandrasekhar: astrophysicist",
-]; */
+    // nested function - manage events
+    function handleClick(){
+        alert("in handleClick");
+    }
 
-export default function List(){
-	const listItem = people.map((person) => 
-		<li key={person.id}>{person.name}</li>
-	);
-	return <ul>{listItem}</ul>;
+    return (
+        <button onClick={handleClick}>
+            no interaction
+        </button>
+    )
+} */
+
+// Inline function
+/*  export default function Button(){
+    return (
+        <button onClick={function handleClick() {
+            alert("ok");
+        }}>
+            no interaction
+        </button>
+    )
+} */
+
+// lambda function
+/* export default function Button(){
+    return (
+        <button onClick={() => {
+            alert("ok");
+        }}>
+            no interaction
+        </button>
+    )
+} */
+
+// reading props in event handler
+/* function AlertButton({message, children}){
+    return (
+        <button onClick={() => alert(message)}>{children}</button>
+    )
 }
 
-/* export default function List(){
-	const chemist = people.filter(person => person.profession === 'chemist')
-
-	const listItems = chemist.map(person => 
-	<li key={person.id}>
-		<img
-			src={getImage(person.imageId)}
-			alt={person.name}
-		/>
-
-		<p><b>{person.name}</b>
-		{person.profession}
-		</p>
-
-	</li>
-	)
-
-	return (
-		<ul>
-			{listItems}
-		</ul>
-	)
+export default function ToolBar(){
+    return (
+        <div>
+            <AlertButton message={"plaing!"}>
+                play movie
+            </AlertButton>
+            <AlertButton message={"Uploading!"}>
+                upload
+            </AlertButton>
+        </div>
+    )
 } */
+
+// passing event handlers as props
+/* function Button({onClick, children}){
+    return (<button onClick={onClick}>{children}</button>)
+}
+
+function PlayButton({movieName}){
+    function handlePlayClick(){
+        alert("playing");
+    }
+
+    return (<Button onClick={PlayButton}>Play {movieName}</Button>)
+}
+
+export default function ToolBar(){
+    return (
+        <PlayButton movieName={"ciao"}></PlayButton>
+    ) 
+} */
+
+// Stop propagation of the event
+export default function ToolBar(){
+    return (
+        <div onClick={() => alert("clicked toolbar")}>
+
+            <button onClick={(e) => { e.stopPropagation(); alert("playing")}}>playing</button>
+            <button onClick={(e) => alert("uploading")}>uploading</button>
+        </div>
+    )
+}
