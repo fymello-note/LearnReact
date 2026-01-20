@@ -76,12 +76,33 @@ export default function ToolBar(){
 } */
 
 // Stop propagation of the event
-export default function ToolBar(){
+/* export default function ToolBar(){
     return (
         <div onClick={() => alert("clicked toolbar")}>
 
             <button onClick={(e) => { e.stopPropagation(); alert("playing")}}>playing</button>
             <button onClick={(e) => alert("uploading")}>uploading</button>
         </div>
+    )
+} */
+
+// the parent take the event first
+/* export default function ToolBar(){
+    return (
+        <div onClick={() => alert("clicked toolbar - BUBBLE")} onClickCapture={() => alert("clicked toolbar - CAPTURE")}>
+            <button onClick={(e) => { e.stopPropagation(); alert("playing")}}>playing</button>
+            <button onClick={(e) => alert("uploading")}>uploading</button>
+        </div>
+    )
+} */
+
+// Prevent default
+export default function SingUp(){
+    return (
+        <form onSubmit={(e) => { e.preventDefault(); alert("submitting")}}>
+            <label>Simone è gay? </label>
+            <input/>
+            <button>send</button>
+        </form>
     )
 }
