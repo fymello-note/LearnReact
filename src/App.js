@@ -1,62 +1,141 @@
-// Other hooks
+// Hook custom
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useOnlineStatus } from "./useOnlineStatus";
 
-// useRef -- viene utilizzato per tenere un componente puro
-// Like global variables, but no re-render if you change it
+// Reusing logic via custom hooks
+
+/* export default function StatusBar(){
+    const [isOnline, setIsOnline] = useState(navigator.onLine); 
+
+    useEffect(() => {
+        function handleOnline() {
+            setIsOnline(true);
+        }
+
+        function handleOffline() {
+            setIsOnline(false);
+        }
+
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        }
+    }, [])
 
 
-/* export default function Counter(){
-    let ref = useRef(0);
+    return <h1>{isOnline ? "online" : "disconnected"}</h1>
+} */
 
-    console.log("rendering");
+/* export default function SaveButton(){
+    const [isOnline, setIsOnline] = useState(navigator.onLine); 
 
-    function handleClick() {
-        ref.current = ref.current + 1;
+    useEffect(() => {
+        function handleOnline() {
+            setIsOnline(true);
+        }
 
+        function handleOffline() {
+            setIsOnline(false);
+        }
 
-        alert('you have clicked ' + ref.current);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        }
+    }, []);
+
+    function handleSaveClick(){
+        console.log("prova")
     }
 
     return (
-        <button onClick={handleClick}>Click me</button>
+        <button disabled={!isOnline} onClick={handleSaveClick}>{isOnline ? "online": "disconnected"}</button>
     );
 } */
 
+function StatusBar(){
+    const isOnline = useOnlineStatus();
 
-// scheduling and task in javascript
-export default function StopWatch(){
-    const [startTime, setStartTime] = useState(null);
-    const [now, setNow] = useState(null);
+    console.log("in the statusBar")
 
-    const intervalRef = useRef(null);
-    const extraRef = useRef({ciao: [1, 3, 4]});
+    return <h1>{isOnline ? "online" : "disconnected"}</h1>
+}
 
-    function handleStart(){
-        setStartTime(Date.now());
-        setNow(Date.now());
+function SaveButton(){
+    const isOnline = useOnlineStatus();
 
-        clearInterval(intervalRef.current);
-
-        intervalRef.current = setInterval(() => {
-            setNow(Date.now());
-        }, 10000);
+    function handleSaveClick(){
+        console.log("prova")
     }
 
-    function handleStop(){
-        clearInterval(intervalRef.current);
+    console.log("in the savebutton")
+
+    return (
+        <button disabled={!isOnline} onClick={handleSaveClick}>{isOnline ? "online": "disconnected"}</button>
+    );
+}
+
+function App(){
+    console.log("in App")
+    return (
+        <>
+            <StatusBar/>
+            <SaveButton/>
+        </>
+    )
+}
+
+// Custom hooks perimit shared logic, not state itself
+/* export default function Form(){ // a lot of repeted code in this function
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+
+    function handleFirstName(e){
+        setFirstName(e.target.value)
     }
 
-    let secondsPassed = 0;
-    if(startTime != null && now != null){
-        secondsPassed = (now-startTime) / 1000;
+    function handleLastName(e){
+        setLastName(e.target.value)
     }
 
     return (
         <>
-            <h1>Time passed {secondsPassed}</h1>
-            <button onClick={handleStart}>Start</button>
-            <button onClick={handleStop}>Stop</button>
+            fn: <input value={firstName} onChange={handleFirstName}/>
+            ln: <input value={lastName} onChange={handleLastName}/>
+        </>
+    )
+} */
+
+function useFormInput(intialValue){
+    const [value, setValue] = useState(intialValue);
+
+    function handleChange(e){
+        setValue(e.target.value);
+    }
+
+    const inputPros = {
+        value: value,
+        onChange: handleChange
+    }
+
+    return inputPros
+}
+
+export default function Form(){
+    const firstName = useFormInput('');
+    const lastName = useFormInput('');
+
+    return (
+        <>
+            fn: <input {...firstName}/>
+            ln: <input {...lastName}/>
         </>
     )
 }
