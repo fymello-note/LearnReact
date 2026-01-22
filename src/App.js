@@ -1,54 +1,62 @@
-// shared state between components (idiom: lifting the state up!)
-/*
-    Toolbar
-        Login       Cart        Credit
-            user        item[]      100E 
+// Other hooks
 
-    spostiamo lo stato di login cart e credit nella toolbar
-    spostiamo tutti gli stati che devono comunicare tra più pagine nel genitore che tiene gli stati
-*/
+import { useRef, useState } from "react";
 
-import { useState } from "react";
+// useRef -- viene utilizzato per tenere un componente puro
+// Like global variables, but no re-render if you change it
 
-// no state is shared
-/* function Panel({title, children}){
-    const [isActive, setIsActive] = useState(false);
+
+/* export default function Counter(){
+    let ref = useRef(0);
+
+    console.log("rendering");
+
+    function handleClick() {
+        ref.current = ref.current + 1;
+
+
+        alert('you have clicked ' + ref.current);
+    }
 
     return (
-        <section>
-            <h3>{title}</h3>
-            {isActive ? <p>{children}</p> : <button onClick={() => setIsActive(true)}>Change State</button>}
-        </section>
-    )
-}
-
-export default function Accordion(){
-    return (
-        <>
-            <Panel title="About">Hello to everybory</Panel>
-            <Panel title="Info">Information now is available</Panel>
-        </>
-    )
+        <button onClick={handleClick}>Click me</button>
+    );
 } */
 
-// lifting the state up 
-function Panel({title, children, isActive, onClick}){
 
-    return (
-        <section>
-            <h3>{title}</h3>
-            {isActive ? <p>{children}</p> : <button onClick={onClick}>Change State</button>}
-        </section>
-    )
-}
+// scheduling and task in javascript
+export default function StopWatch(){
+    const [startTime, setStartTime] = useState(null);
+    const [now, setNow] = useState(null);
 
-export default function Accordion(){
-    const [activeIndex, setActiveIndex] = useState(0); // single source of truth
+    const intervalRef = useRef(null);
+    const extraRef = useRef({ciao: [1, 3, 4]});
+
+    function handleStart(){
+        setStartTime(Date.now());
+        setNow(Date.now());
+
+        clearInterval(intervalRef.current);
+
+        intervalRef.current = setInterval(() => {
+            setNow(Date.now());
+        }, 10000);
+    }
+
+    function handleStop(){
+        clearInterval(intervalRef.current);
+    }
+
+    let secondsPassed = 0;
+    if(startTime != null && now != null){
+        secondsPassed = (now-startTime) / 1000;
+    }
 
     return (
         <>
-            <Panel title="About" isActive={activeIndex === 0} onClick={() => setActiveIndex(0)}>Hello to everybory</Panel>
-            <Panel title="Info" isActive={activeIndex === 1} onClick={() => setActiveIndex(1)}>Information now is available</Panel>
+            <h1>Time passed {secondsPassed}</h1>
+            <button onClick={handleStart}>Start</button>
+            <button onClick={handleStop}>Stop</button>
         </>
     )
 }
