@@ -2559,7 +2559,7 @@ export const foods = [{
   description: 'Dim sum is a large range of small dishes that Cantonese people traditionally enjoy in restaurants for breakfast and lunch'
 }];
 
-App.js
+```js App.js
 "use client";
 
 import { useState } from 'react';
@@ -2607,10 +2607,11 @@ function List({ items }) {
     </table>
   );
 }
+```
 
 Preserving and Resetting State
 
-Index.css
+```css Index.css
 .counter {
   width: 100px;
   text-align: center;
@@ -2624,6 +2625,7 @@ Index.css
 .hover {
   background: #ffffd8;
 }
+```
 
 Recap
 •	React keeps state for as long as the same component is rendered at the same position.
@@ -3700,7 +3702,7 @@ You’ll need to write your custom Hook in useCounter.js and import it into the 
 useCounter.js
 // Write your custom Hook in this file!
 
-App.js
+```js App.js
 import { useState, useEffect } from 'react';
 
 export default function Counter() {
@@ -3713,6 +3715,7 @@ export default function Counter() {
   }, []);
   return <h1>Seconds passed: {count}</h1>;
 }
+```
 
 Exercise 2 of 2: Make the counter delay configurable 
 In this example, there is a delay state variable controlled by a slider, but its value is not used. Pass the delay value to your custom useCounter Hook, and change the useCounter Hook to use the passed delay instead of hardcoding 1000 ms.
