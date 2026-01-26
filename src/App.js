@@ -1,57 +1,33 @@
-import { useReducer, useState } from 'react';
-import AddTask from './AddTask.js';
-import TaskList from './TaskList.js';
-import { tasksReducer } from './tasksReducer.js';
-import { useImmerReducer } from 'use-immer';
+import logo from './logo.svg';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+// import AddReview from './components/add-review';
+import MoviesList from './Components/Movies-list';
+// import Movie from './components/movie';
+// import Login from './components/login';
+import Nav from 'react-bootstrap/Nav';
+import NavBar from 'react-bootstrap/NavBar';
+import { Link, Route, Switch } from 'react-router-dom/cjs/react-router-dom';
 
-/*
-    Benefits in using useReducer
-        Code size
-        Readability
-        Testing
-        debugging
-        Personal preference
-*/
+function App() {
+  return (
+    <div className="App">
+      <NavBar bg='light' expand='lg'>
+        <NavBar.Brand href='#home'>React Bootstrap</NavBar.Brand>
+        <NavBar.Toggle aria-controls='basic-navbar-nav'></NavBar.Toggle>
+        <NavBar.Collapse id="basic-navbar-nav">
+          <Nav className='mr-auto'>
+            <Nav.Link ><Link to={"/movies"}>Movies</Link></Nav.Link>
+            <Nav.Link href='#link'>Link</Nav.Link>
+          </Nav>
+        </NavBar.Collapse>
+      </NavBar>
 
-// Reducer must be pure
-// Each action describe a single user interaction
-
-export default function TaskApp() {
-    // const [tasks, setTasks] = useState(initialTasks);
-
-    // const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
-
-    // Con immer
-    const [tasks, dispatch] = useImmerReducer(tasksReducer, initialTasks);
-
-    function handleAddTask(text) {
-        dispatch({type:'added', id:nextId++, text: text})
-    }
-
-    function handleChangeTask(task) {
-        dispatch({type:'changed', task: task})
-    }
-
-    function handleDeleteTask(taskId) {
-        dispatch({type:'deleted', id:taskId})
-    }
-
-    return (
-        <>
-            <h1>Prague itinerary</h1>
-            <AddTask onAddTask={handleAddTask} />
-            <TaskList
-                tasks={tasks}
-                onChangeTask={handleChangeTask}
-                onDeleteTask={handleDeleteTask}
-            />
-        </>
-    );
+        <Switch>
+            <Route exact path={["/", "/movies"]} component={MoviesList}></Route>
+        </Switch>
+    </div>
+  );
 }
 
-let nextId = 3;
-const initialTasks = [
-    { id: 0, text: 'Visit Kafka Museum', done: true },
-    { id: 1, text: 'Watch a puppet show', done: false },
-    { id: 2, text: 'Lennon Wall pic', done: false },
-];
+export default App;

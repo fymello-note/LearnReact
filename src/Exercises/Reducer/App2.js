@@ -1,27 +1,28 @@
-import { useReducer } from "react";
 import { useImmerReducer } from "use-immer";
 
-function ListActivities({state, dispatch}){
+function ListActivities({activities, text, user, dispatch}){
     return (
         <>
             <div>
                 <ul>
-                {state.activities.map((active) => {
+                {activities.map((active) => {
                     return (
-                        <li key={active.id}>
-                            {active.id} <b>{active.name}</b>
+                        <li key={active.id} style={{listStyleType: "none"}}>
+                            {active.id}.  <b>{active.name}</b>
                         </li>
                     )
                 })}
                 </ul>
             </div>
             <div>
-                <input value={state.text} onChange={(e) => dispatch({type: "change_text", text: e.target.value})} />
-                <button onClick={(e) => dispatch({ type: 'add_activities', id: 1 + state.activities.length })}>Add</button>
+                <p>Activity: &nbsp;&nbsp; 
+                    <input value={text} onChange={(e) => dispatch({ type: "change_text", text: e.target.value })} />
+                    <button onClick={() => dispatch({ type: 'add_activities', id: 1 + activities[activities.length-1].id })}>Add</button>
+                </p>
             </div>
             <br />
             <div>
-                Welcome {state.user.flg_logged ? state.user.name : 'anonymous'}
+                Welcome {user.flg_logged ? <b>{user.name}</b> : 'anonymous'}
             </div>
         </>
     ) 
@@ -46,11 +47,13 @@ export default function MyApp(){
     return (
         <>
             <div>
-                <ListActivities state={state} dispatch={dispatch} />
+                <ListActivities activities={state.activities} text={state.text} user={state.user} dispatch={dispatch} />
             </div>
             <br />
             <div>
-                <Login user={state.user.name} dispatch={dispatch} />
+                <p>username: &nbsp;&nbsp;
+                    <Login user={state.user.name} dispatch={dispatch} />
+                </p>
             </div>
         </>
     )
